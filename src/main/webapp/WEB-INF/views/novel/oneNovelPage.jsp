@@ -14,7 +14,9 @@
     <script>
       /* 체크박스 전체 선택 */
       $(document).ready(function(){
-    	${errorMsg}
+    	if("${msg}"){
+    		alert("${msg}");
+    	}
     	  
         $("#all").click(function(){
           if($("#all").prop("checked")){
@@ -46,7 +48,6 @@
 	          var chk = confirm("선택한 소설 "+$("input:checkbox[name='check']:checked").length+"개를 구매하시겠습니까?");
 	          if(chk){
 	            $("form").attr("action","/buyNow");
-	            alert("구매되었습니다.");
 	          }else{
 	            e.preventDefault();
 	          }

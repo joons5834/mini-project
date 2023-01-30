@@ -1,20 +1,24 @@
 package novel;
 
-import episodes.EpisodesDTO;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-import main.NovelDAO;
-import main.NovelDTO;
-import main.NovelService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import episodes.EpisodesDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import main.NovelDAO;
+import main.NovelDTO;
+import main.NovelService;
 import sale.SaleService;
 
 @Controller
@@ -31,7 +35,7 @@ public class NovelController {
     SaleService saleService;
 
     @RequestMapping("/oneNovelPage") // id=novel_id
-    public ModelAndView oneNovelPage(int id, int page, HttpSession session) {
+    public ModelAndView oneNovelPage(int id, int page, @RequestParam(required=false) String msg, HttpSession session) {
         ModelAndView mv = new ModelAndView();
         Object obj_user_id = session.getAttribute("loginid");
         int user_id = -1; 
@@ -55,6 +59,7 @@ public class NovelController {
         mv.addObject("dto", noveldto);
         mv.addObject("cnt", total_list);
         mv.addObject("list", list);
+        mv.addObject("msg", msg);
         mv.setViewName("novel/oneNovelPage");
         return mv;
     }
@@ -71,17 +76,19 @@ public class NovelController {
     }
 
     @PostMapping("/buyNow")
-    public ModelAndView buyNovel(int[] check, HttpServletRequest request) {
+    public ModelAndView buyNovel(int[] check, HttpServletRequest request) throws UnsupportedEncodingException {
         ModelAndView mv = new ModelAndView();
         int id = Integer.parseInt(request.getParameter("id")); //epi_id
         int user_id = Integer.parseInt(request.getParameter("user_id"));
         try {
             saleService.buyEpisodes(user_id, check);
         } catch (Exception e) {
-            mv.setViewName("redirect:/oneNovelPage?id=" + id + "&page=1");
+        	String encodeResult = URLEncoder.encode("잔액 부족이거나 오류가 발생했습니다.", "UTF-8");
+            mv.setViewName("redirect:/oneNovelPage?id=" + id + "&msg="+ encodeResult + "&page=1");
             return mv;
         }
-        mv.setViewName("redirect:/oneNovelPage?id=" + id + "&page=1");
+        String encodeResult = URLEncoder.encode("구매에 성공했습니다.", "UTF-8");
+        mv.setViewName("redirect:/oneNovelPage?id=" + id + "&msg="+ encodeResult + "&page=1");
         return mv;
     }
 
