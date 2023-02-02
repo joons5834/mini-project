@@ -71,6 +71,11 @@
     from users
     where id = #{id}
   </select>
-
+	
+  <update id="addBalance" >
+  	update users
+  	set sand = sand + #{amount}
+  	where id=#{userId}
+  </update>
 </mapper>
 

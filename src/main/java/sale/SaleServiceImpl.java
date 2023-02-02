@@ -44,5 +44,19 @@ public class SaleServiceImpl implements SaleService {
         return dao.getBalance(id);
     }
 
+	@Override
+	public int addBalance(int userId, int amount) {
+		try {
+			dao.addBalance(userId, amount);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -1;
+		}
+		return 0;
+	}
+    
+    
+
 
 }

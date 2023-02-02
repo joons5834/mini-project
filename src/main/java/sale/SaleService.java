@@ -13,6 +13,8 @@ public interface SaleService {
     public void buyEpisodes(int userId, int[] episodeIds) throws Exception;
 
     public int getBalance(int id);
+    
+    public int addBalance(int userId, int amount);
 
 }
  

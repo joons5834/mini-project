@@ -30,6 +30,7 @@
             <a class="a" href="/cart">장바구니</a>
             <a class="a" href="/mypage">내서재</a>
             <a class="a" href="/logout">로그아웃</a>
+            <a class="a" href="/topup">충전하기</a>
             <%} else {%>
             <a class="a" href="/join">회원가입</a>
             <a class="a" href="/login">로그인</a>

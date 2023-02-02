@@ -27,4 +27,6 @@ public interface SaleDAO {
 
     public int getBalance(int id);
 
+	public void addBalance(@Param("userId") int userId, @Param("amount")int amount);
+
 }

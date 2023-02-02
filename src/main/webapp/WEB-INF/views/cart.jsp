@@ -121,6 +121,9 @@
 <jsp:include page="footer.jsp"/>
 <script src="/resources/js/jquery-3.6.1.min.js"></script>
 <script>
+	if("${resultMsg}"){
+		alert("${resultMsg}");
+	}
   function updateTotalPrice() {
     let priceCells = [...document.getElementsByClassName('price')];
     let totalPrice = priceCells.reduce(
